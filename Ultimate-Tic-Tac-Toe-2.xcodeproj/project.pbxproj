@@ -12,6 +12,9 @@
 		A58FDF181FDAE3A400F09C06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58FDF161FDAE3A400F09C06 /* Main.storyboard */; };
 		A58FDF1A1FDAE3A400F09C06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A58FDF191FDAE3A400F09C06 /* Assets.xcassets */; };
 		A58FDF1D1FDAE3A400F09C06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58FDF1B1FDAE3A400F09C06 /* LaunchScreen.storyboard */; };
+		A58FDF251FDAE50900F09C06 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58FDF241FDAE50900F09C06 /* Cell.swift */; };
+		A58FDF271FDAE51400F09C06 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58FDF261FDAE51400F09C06 /* Board.swift */; };
+		A58FDF291FDAE53100F09C06 /* BigBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58FDF281FDAE53100F09C06 /* BigBoard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		A58FDF191FDAE3A400F09C06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A58FDF1C1FDAE3A400F09C06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A58FDF1E1FDAE3A400F09C06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A58FDF241FDAE50900F09C06 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		A58FDF261FDAE51400F09C06 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		A58FDF281FDAE53100F09C06 /* BigBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigBoard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,9 @@
 				A58FDF191FDAE3A400F09C06 /* Assets.xcassets */,
 				A58FDF1B1FDAE3A400F09C06 /* LaunchScreen.storyboard */,
 				A58FDF1E1FDAE3A400F09C06 /* Info.plist */,
+				A58FDF241FDAE50900F09C06 /* Cell.swift */,
+				A58FDF261FDAE51400F09C06 /* Board.swift */,
+				A58FDF281FDAE53100F09C06 /* BigBoard.swift */,
 			);
 			path = "Ultimate-Tic-Tac-Toe-2";
 			sourceTree = "<group>";
@@ -138,6 +147,9 @@
 			files = (
 				A58FDF151FDAE3A400F09C06 /* ViewController.swift in Sources */,
 				A58FDF131FDAE3A400F09C06 /* AppDelegate.swift in Sources */,
+				A58FDF291FDAE53100F09C06 /* BigBoard.swift in Sources */,
+				A58FDF271FDAE51400F09C06 /* Board.swift in Sources */,
+				A58FDF251FDAE50900F09C06 /* Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
