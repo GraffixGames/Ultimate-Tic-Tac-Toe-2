@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+class BigBoard: Board {
+	private var board: [Board]
+	
+	override init() {
+		board = [Board]()
+		for _ in 0..<9 {
+			board.append(Board())
+		}
+	}
+}

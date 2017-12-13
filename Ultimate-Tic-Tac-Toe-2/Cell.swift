@@ -18,7 +18,19 @@ class Cell {
 	
 	internal var type: types
 	
+	public func getType() -> types {
+		return type
+	}
+	
+	init() {
+		type = .none
+	}
+	
 	init(t: types) {
 		type = t
+	}
+	
+	internal func checkWinner() -> types {
+		return type
 	}
 }
