@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 	var board = Board()
 	var boardButtons = [UIButton]()
+	var boardLines = [CAShapeLayer]()
 	var screensize = CGRect()
 	
 	override func viewDidLoad() {
@@ -40,16 +41,21 @@ class ViewController: UIViewController {
 		var lineOffset = CGFloat()
 		var screenOffsety = CGFloat()
 		var screenOffsetx = CGFloat()
+		deleteLines()
 		switch screensize.width < screensize.height {
 		case true:
 			lineOffset = screensize.width / 28
 			buttonSize = (screensize.width / 3) - (lineOffset - lineOffset / 3)
 			screenOffsety = screensize.height / 2 - 3 * (buttonSize + lineOffset) / 2 + lineOffset / 2
+			loadLines(buttonSize, lineOffset, screensize.width, screenOffsetx, screenOffsety)
 		default:
 			lineOffset = screensize.height / 28
 			buttonSize = (screensize.height / 3) - (lineOffset - lineOffset / 3)
 			screenOffsetx = screensize.width / 2 - 3 * (buttonSize + lineOffset) / 2 + lineOffset / 2
+			loadLines(buttonSize, lineOffset, screensize.height, screenOffsetx, screenOffsety)
 		}
+		
+
 		
 		// load 9 buttons
 		for i in 0..<9 {
@@ -76,9 +82,39 @@ class ViewController: UIViewController {
 		}
 	}
 	
-	func loadLines() {
-		
+	func loadLines(_ buttonSize: CGFloat, _ lineOffset: CGFloat, _ boardSize: CGFloat, _ xOffset: CGFloat, _ yOffset: CGFloat) {
+		// x axis
+		for i in 0..<2 {
+			var layer = CAShapeLayer()
+			var lineRect = CGRect(x: xOffset, y: yOffset + CGFloat(i) * (buttonSize + lineOffset) + buttonSize, width: boardSize, height: lineOffset)
+			var line = UIBezierPath(rect: lineRect)
+			layer.path = line.cgPath
+			layer.strokeColor = UIColor.black.cgColor
+			layer.fillColor = UIColor.black.cgColor
+			self.view.layer.addSublayer(layer)
+			boardLines.append(layer)
+		}
+		// y axis
+		for i in 0..<2 {
+			var layer = CAShapeLayer()
+			var lineRect = CGRect(x: xOffset + CGFloat(i) * (buttonSize + lineOffset) + buttonSize, y: yOffset, width: lineOffset, height: boardSize)
+			var line = UIBezierPath(rect: lineRect)
+			layer.path = line.cgPath
+			layer.strokeColor = UIColor.black.cgColor
+			layer.fillColor = UIColor.black.cgColor
+			self.view.layer.addSublayer(layer)
+			boardLines.append(layer)
+		}
 	}
+	
+	func deleteLines() {
+		for line in boardLines {
+			line.removeFromSuperlayer()
+		}
+		boardLines.removeAll()
+		print("cleared all lines")
+	}
+	
 	func getButtonBoardPos(_ sender: UIButton) -> (x: Int, y: Int) {
 		var pos: (x: Int, y: Int) = (x: 0, y: 0)
 		var counter = 0

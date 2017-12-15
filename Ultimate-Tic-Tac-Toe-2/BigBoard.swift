@@ -17,4 +17,8 @@ class BigBoard: Board {
 			board.append(Board())
 		}
 	}
+	
+	override func getType() -> (t: Cell.types, text: String) {
+		return (t: types.none, text: "")
+	}
 }

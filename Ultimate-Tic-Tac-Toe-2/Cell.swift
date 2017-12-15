@@ -26,9 +26,9 @@ class Cell {
 		case .o:
 			text = "O"
 		case .neither:
-			text = "neither"
+			text = ""
 		default:
-			text = "none"
+			text = ""
 		}
 		return (t: type, text: text)
 	}
