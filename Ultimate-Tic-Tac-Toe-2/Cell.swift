@@ -18,8 +18,19 @@ class Cell {
 	
 	internal var type: types
 	
-	public func getType() -> types {
-		return type
+	internal func getType() -> (t: types, text:String) {
+		var text: String
+		switch type {
+		case .x:
+			text = "X"
+		case .o:
+			text = "O"
+		case .neither:
+			text = "neither"
+		default:
+			text = "none"
+		}
+		return (t: type, text: text)
 	}
 	
 	init() {

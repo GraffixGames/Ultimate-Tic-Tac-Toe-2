@@ -28,6 +28,10 @@ class Board: Cell {
 		}
 	}
 	
+	public func getType(x: Int, y: Int) -> (t: types, text: String) {
+		return board[x + y * 3].getType()
+	}
+	
 	override internal func checkWinner() -> types {
 		var count: Int = 0
 		for combo in winningCombos {

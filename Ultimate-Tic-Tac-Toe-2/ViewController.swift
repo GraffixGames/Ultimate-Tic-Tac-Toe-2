@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-	var board = BigBoard()
+	var board = Board()
 	var boardButtons = [UIButton]()
 	var screensize = CGRect()
 	
@@ -23,6 +23,7 @@ class ViewController: UIViewController {
 	func reloadButtons() {
 		deleteButons()
 		loadButtons()
+		print("Reloaded Buttons")
 	}
 	
 	func deleteButons() {
@@ -30,36 +31,54 @@ class ViewController: UIViewController {
 			boardButtons[button].removeFromSuperview()
 		}
 		boardButtons.removeAll()
+		print("Deleted Buttons")
 	}
 	
 	func loadButtons() {
+		// set the size the buttons should be on the screen
 		var buttonSize = CGFloat()
+		var lineOffset = CGFloat()
+		var screenOffsety = CGFloat()
+		var screenOffsetx = CGFloat()
 		switch screensize.width < screensize.height {
 		case true:
-			buttonSize = (screensize.width / 3) - (screensize.width / 16)
+			lineOffset = screensize.width / 28
+			buttonSize = (screensize.width / 3) - (lineOffset - lineOffset / 3)
+			screenOffsety = screensize.height / 2 - 3 * (buttonSize + lineOffset) / 2 + lineOffset / 2
 		default:
-			buttonSize = (screensize.height / 3) - (screensize.height / 16)
+			lineOffset = screensize.height / 28
+			buttonSize = (screensize.height / 3) - (lineOffset - lineOffset / 3)
+			screenOffsetx = screensize.width / 2 - 3 * (buttonSize + lineOffset) / 2 + lineOffset / 2
 		}
 		
+		// load 9 buttons
 		for i in 0..<9 {
+			// add a button to the boadButtons array
 			boardButtons.append(UIButton(type: UIButtonType.custom))
-			let x = (CGFloat(0 + (i % 3)) * buttonSize)
-			let y = (CGFloat(0 + (i / 3)) * buttonSize)
+			// get the position in the board that the button is, and get the corrisponding screen position
+			let boardPos = CGPoint(x: i % 3, y: i / 3)
+			let screenPos = CGPoint(x: boardPos.x * (buttonSize + lineOffset) + screenOffsetx, y: boardPos.y * (buttonSize + lineOffset) + screenOffsety)
+			// set the size and position of the button
 			boardButtons[i].bounds = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
-			boardButtons[i].frame.origin = CGPoint(x: x, y: y)
+			boardButtons[i].frame.origin = screenPos
+			//color every other button red and green
 			if i % 2 == 0 {
 				boardButtons[i].backgroundColor = .red
 			}
 			else {
 				boardButtons[i].backgroundColor = .green
 			}
-			boardButtons[i].setTitle("Button\(i)", for: UIControlState.normal)
+			// add the funciton to the button
 			boardButtons[i].addTarget(self, action: #selector(didTouchUp), for: .touchUpInside)
+			// add the button to the view and print out the that it was added
 			self.view.addSubview(boardButtons[i])
-			print("Added Button at (\(x), \(y))")
+			print("Added Button at (\(screenPos.x), \(screenPos.y))")
 		}
 	}
 	
+	func loadLines() {
+		
+	}
 	func getButtonBoardPos(_ sender: UIButton) -> (x: Int, y: Int) {
 		var pos: (x: Int, y: Int) = (x: 0, y: 0)
 		var counter = 0
@@ -75,7 +94,7 @@ class ViewController: UIViewController {
 	}
 	
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		screensize = view.bounds
+		screensize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 		reloadButtons()
 	}
 	
@@ -85,7 +104,10 @@ class ViewController: UIViewController {
 	}
 	
 	func loadBoard(_ board: Board) {
-		
+		for button in boardButtons {
+			let pos = getButtonBoardPos(button)
+			button.setTitle(board.getType(x: pos.x, y: pos.y).text, for: .normal)
+		}
 	}
 	
 	func loadBoard(_ board: BigBoard) {
@@ -94,5 +116,6 @@ class ViewController: UIViewController {
 	
 	@objc func didTouchUp(_ sender: UIButton) {
 		print("Tapped Button at \(getButtonBoardPos(sender))")
+		sender.setTitle("Tapped", for: UIControlState.normal)
 	}
 }
