@@ -41,7 +41,7 @@ class Cell {
 		type = t
 	}
 	
-	internal func checkWinner() -> types {
+	public func checkWinner() -> types {
 		return type
 	}
 }

@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 	var board = Board()
+	var player = Cell.types.x
 	var boardButtons = [UIButton]()
 	var boardLines = [CAShapeLayer]()
 	var screensize = CGRect()
@@ -67,13 +68,13 @@ class ViewController: UIViewController {
 			// set the size and position of the button
 			boardButtons[i].bounds = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
 			boardButtons[i].frame.origin = screenPos
-			//color every other button red and green
+			// set button color
 			if i % 2 == 0 {
 				boardButtons[i].backgroundColor = .red
-			}
-			else {
+			} else {
 				boardButtons[i].backgroundColor = .green
 			}
+			boardButtons[i].setTitleColor(.black, for: .normal)
 			// add the funciton to the button
 			boardButtons[i].addTarget(self, action: #selector(didTouchUp), for: .touchUpInside)
 			// add the button to the view and print out the that it was added
@@ -85,9 +86,9 @@ class ViewController: UIViewController {
 	func loadLines(_ buttonSize: CGFloat, _ lineOffset: CGFloat, _ boardSize: CGFloat, _ xOffset: CGFloat, _ yOffset: CGFloat) {
 		// x axis
 		for i in 0..<2 {
-			var layer = CAShapeLayer()
-			var lineRect = CGRect(x: xOffset, y: yOffset + CGFloat(i) * (buttonSize + lineOffset) + buttonSize, width: boardSize, height: lineOffset)
-			var line = UIBezierPath(rect: lineRect)
+			let layer = CAShapeLayer()
+			let lineRect = CGRect(x: xOffset, y: yOffset + CGFloat(i) * (buttonSize + lineOffset) + buttonSize, width: boardSize, height: lineOffset)
+			let line = UIBezierPath(rect: lineRect)
 			layer.path = line.cgPath
 			layer.strokeColor = UIColor.black.cgColor
 			layer.fillColor = UIColor.black.cgColor
@@ -96,9 +97,9 @@ class ViewController: UIViewController {
 		}
 		// y axis
 		for i in 0..<2 {
-			var layer = CAShapeLayer()
-			var lineRect = CGRect(x: xOffset + CGFloat(i) * (buttonSize + lineOffset) + buttonSize, y: yOffset, width: lineOffset, height: boardSize)
-			var line = UIBezierPath(rect: lineRect)
+			let layer = CAShapeLayer()
+			let lineRect = CGRect(x: xOffset + CGFloat(i) * (buttonSize + lineOffset) + buttonSize, y: yOffset, width: lineOffset, height: boardSize)
+			let line = UIBezierPath(rect: lineRect)
 			layer.path = line.cgPath
 			layer.strokeColor = UIColor.black.cgColor
 			layer.fillColor = UIColor.black.cgColor
@@ -142,7 +143,15 @@ class ViewController: UIViewController {
 	func loadBoard(_ board: Board) {
 		for button in boardButtons {
 			let pos = getButtonBoardPos(button)
-			button.setTitle(board.getType(x: pos.x, y: pos.y).text, for: .normal)
+			if board.getType(x: pos.x, y: pos.y).t != .none && board.getType(x: pos.x, y: pos.y).t != .neither {
+				print("button \(getButtonBoardPos(button)) was x or o")
+				button.isEnabled = false
+				button.setTitle(board.getType(x: pos.x, y: pos.y).text, for: .normal)
+			} else {
+				print("button \(getButtonBoardPos(button)) was blank")
+				button.isEnabled = true
+				button.setTitle("", for: .normal)
+			}
 		}
 	}
 	
@@ -152,6 +161,14 @@ class ViewController: UIViewController {
 	
 	@objc func didTouchUp(_ sender: UIButton) {
 		print("Tapped Button at \(getButtonBoardPos(sender))")
-		sender.setTitle("Tapped", for: UIControlState.normal)
+		let pos = getButtonBoardPos(sender)
+		print(board.turn(x: pos.x, y: pos.y, t: player))
+		switch player {
+		case Cell.types.x:
+			player = Cell.types.o
+		default:
+			player = Cell.types.x
+		}
+		loadBoard(board)
 	}
 }

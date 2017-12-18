@@ -32,14 +32,15 @@ class Board: Cell {
 		return board[x + y * 3].getType()
 	}
 	
-	private func turn(x: Int, y: Int) -> Bool {
+	public func turn(x: Int, y: Int, t: types) -> Bool {
 		if (board[x + y * 3].type != .none) {
 			return false
 		}
+		board[x + y * 3].type = t
 		return true
 	}
 	
-	override internal func checkWinner() -> types {
+	override public func checkWinner() -> types {
 		var count: Int = 0
 		for combo in winningCombos {
 			var row: [types] = []
