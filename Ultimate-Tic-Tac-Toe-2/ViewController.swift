@@ -83,6 +83,10 @@ class ViewController: UIViewController {
 		}
 	}
 	
+	func loadSubButtons() {
+		
+	}
+	
 	func loadLines(_ buttonSize: CGFloat, _ lineOffset: CGFloat, _ boardSize: CGFloat, _ xOffset: CGFloat, _ yOffset: CGFloat) {
 		// x axis
 		for i in 0..<2 {
